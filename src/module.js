@@ -3,4 +3,4 @@
 *
 * The main usabilla components module
 */
-angular.module('usabilla.components', ['templates']);
+angular.module('usabilla.modules', ['templates']);

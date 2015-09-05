@@ -46,7 +46,7 @@ gulp.task('scripts', ['clean', 'lint'], function () {
       .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(addStream.obj(templates()))
-      .pipe(concat('usabilla.components.min.js'))
+      .pipe(concat('usabilla.modules.min.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dist));
 });

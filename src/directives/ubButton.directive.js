@@ -1,4 +1,4 @@
-angular.module('usabilla.components')
+angular.module('usabilla.modules')
   .directive('ubButton', function () {
     return {
       scope: {},

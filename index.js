@@ -1,1 +1,1 @@
-angular.module('app', ['usabilla.components']);
+angular.module('app', ['usabilla.modules']);
