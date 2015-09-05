@@ -60,8 +60,7 @@ gulp.task('watch', function () {
 gulp.task('webserver', ['scripts', 'watch'], function () {
   gulp.src('.')
     .pipe(webserver({
-      livereload: true,
-      open: true
+      livereload: true
     }));
 });
 
