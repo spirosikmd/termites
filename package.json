@@ -2,7 +2,7 @@
   "name": "usabilla.modules",
   "version": "1.0.0",
   "description": "Module library for usabilla common components",
-  "main": "index.js",
+  "main": "src/module.js",
   "scripts": {
     "test": "npm run tests"
   },
