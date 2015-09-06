@@ -1,16 +1,18 @@
 var gulp = require('gulp');
-var changed = require('gulp-changed');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
-var newer = require('gulp-newer');
 var ngAnnotate = require('gulp-ng-annotate');
 var webserver = require('gulp-webserver');
 var angularTemplateCache = require('gulp-angular-templatecache');
 var minifyHTML = require('gulp-minify-html');
 var eslint = require('gulp-eslint');
+var gutil = require('gulp-util');
 var addStream = require('add-stream');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var del = require('del');
+var browserify = require('browserify');
 
 var paths = {
   scripts: ['src/**/*.js'],
@@ -39,14 +41,20 @@ gulp.task('lint', function () {
 // Minify and copy all JavaScript
 // with sourcemaps all the way down
 gulp.task('scripts', ['clean', 'lint'], function () {
-  return gulp.src(paths.scripts)
-    .pipe(changed(dist))
-    .pipe(newer(dist))
-    .pipe(sourcemaps.init())
+  var b = browserify({
+    entries: './src/module.js',
+    debug: true
+  });
+
+  return b.bundle()
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(addStream.obj(templates()))
       .pipe(concat('usabilla.modules.min.js'))
+      .on('error', gutil.log)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dist));
 });

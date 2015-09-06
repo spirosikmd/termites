@@ -1,6 +1,5 @@
-angular.module('usabilla.modules').
-  controller('ubButtonController', function () {
-    this.click = function () {
-      console.log('clicked');
-    };
-  });
+module.exports = function ubButtonController () {
+  this.click = function click () {
+    console.log('clicked!');
+  };
+};
