@@ -1,4 +1,5 @@
-module.exports = function ubButton () {
+/* @ngInject */
+function ubButton () {
   return {
     scope: {},
     restrict: 'E',
@@ -12,4 +13,6 @@ module.exports = function ubButton () {
       $scope.text = iAttrs.text;
     }
   };
-};
+}
+
+module.exports = ubButton;

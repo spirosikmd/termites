@@ -1,5 +1,9 @@
-module.exports = function ubButtonController () {
+/* @ngInject */
+function ubButtonController ($scope) {
+  $scope.clicked = false;
   this.click = function click () {
-    console.log('clicked!');
+    $scope.clicked = true;
   };
-};
+}
+
+module.exports = ubButtonController;
