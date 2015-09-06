@@ -19,9 +19,9 @@ var browserify = require('browserify');
 var Server = require('karma').Server;
 
 var paths = {
-  scripts: ['src/**/*.js'],
-  styles: ['src/**/*.scss'],
-  templates: ['src/templates/**/*.html']
+  scripts: ['src/js/**/*.js'],
+  styles: ['src/scss/**/*.scss'],
+  templates: ['src/partials/**/*.html']
 };
 var dist = 'dist';
 

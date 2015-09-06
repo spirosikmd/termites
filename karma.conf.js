@@ -17,7 +17,7 @@ module.exports = function (config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'src/**/*.html',
+      'src/partials/**/*.html',
       'tests/**/*.spec.js'
     ],
 
@@ -37,12 +37,12 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'tests/**/*.spec.js': ['browserify'],
-      'src/**/*.html': ['ng-html2js']
+      'src/partials/**/*.html': ['ng-html2js']
     },
 
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'src/templates/',
+      stripPrefix: 'src/partials/',
       moduleName: 'karma.templates'
     },
 
