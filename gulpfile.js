@@ -79,7 +79,7 @@ gulp.task('karma:watch', function (done) {
 });
 
 // Start a development server
-gulp.task('serve', ['scripts', 'watch', 'karma:watch'], function () {
+gulp.task('serve', ['scripts', 'watch'], function () {
   gulp.src('.')
     .pipe(webserver({
       livereload: true
