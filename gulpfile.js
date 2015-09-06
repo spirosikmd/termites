@@ -13,6 +13,7 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var del = require('del');
 var browserify = require('browserify');
+var Server = require('karma').Server;
 
 var paths = {
   scripts: ['src/**/*.js'],
@@ -64,12 +65,25 @@ gulp.task('watch', function () {
   gulp.watch(paths.scripts, ['scripts']);
 });
 
+gulp.task('karma', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('karma:watch', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
+
 // Start a development server
-gulp.task('webserver', ['scripts', 'watch'], function () {
+gulp.task('serve', ['scripts', 'watch', 'karma:watch'], function () {
   gulp.src('.')
     .pipe(webserver({
       livereload: true
     }));
 });
 
-gulp.task('default', ['scripts', 'watch']);
+gulp.task('default', ['scripts', 'karma']);
