@@ -8,6 +8,9 @@ var angularTemplateCache = require('gulp-angular-templatecache');
 var minifyHTML = require('gulp-minify-html');
 var eslint = require('gulp-eslint');
 var gutil = require('gulp-util');
+var sass = require('gulp-ruby-sass');
+var prefix = require('gulp-autoprefixer');
+var minifyCSS = require('gulp-minify-css');
 var addStream = require('add-stream');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -17,6 +20,7 @@ var Server = require('karma').Server;
 
 var paths = {
   scripts: ['src/**/*.js'],
+  styles: ['src/**/*.scss'],
   templates: ['src/templates/**/*.html']
 };
 var dist = 'dist';
@@ -54,15 +58,26 @@ gulp.task('scripts', ['clean', 'lint'], function () {
       .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(addStream.obj(templates()))
-      .pipe(concat('usabilla.modules.min.js'))
+      .pipe(concat('ub.modules.min.js'))
       .on('error', gutil.log)
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(dist));
+});
+
+gulp.task('sass', function () {
+  return sass('src/', {sourcemap: true, style: 'compact'})
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
+      .pipe(minifyCSS())
+      .pipe(concat('ub.modules.min.css'))
+      .on('error', sass.logError)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dist));
 });
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch([paths.scripts, paths.styles], ['scripts', 'sass']);
 });
 
 gulp.task('karma', function (done) {
@@ -79,11 +94,11 @@ gulp.task('karma:watch', function (done) {
 });
 
 // Start a development server
-gulp.task('serve', ['scripts', 'watch'], function () {
+gulp.task('serve', ['scripts', 'sass', 'watch'], function () {
   gulp.src('.')
     .pipe(webserver({
       livereload: true
     }));
 });
 
-gulp.task('default', ['scripts', 'karma']);
+gulp.task('default', ['scripts', 'sass', 'karma']);
