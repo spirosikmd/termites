@@ -10,11 +10,11 @@ describe('ubButtonController', function () {
   }));
 
   describe('click', function () {
-    it('logs "clicked"', function () {
+    it('should change text to "clicked"', function () {
       var $scope = {};
       var controller = $controller('ubButtonController', { $scope: $scope });
       controller.click();
-      expect($scope.clicked).toEqual(true);
+      expect($scope.text).toEqual('clicked');
     });
   });
 });
