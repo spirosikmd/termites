@@ -38,7 +38,7 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
-// Minify and copy all JavaScript
+// Browserify, minify and copy all JavaScript
 // with sourcemaps all the way down
 gulp.task('scripts', ['clean', 'lint'], function () {
   var b = browserify({

@@ -6,7 +6,11 @@
   "scripts": {
     "test": "npm run tests"
   },
-  "author": "Spyros Ioakeimidis <spyrosikmd@gmail.com>",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/usabilla/usabilla.modules"
+  },
+  "author": "Spyros Ioakeimidis",
   "license": "MIT",
   "devDependencies": {
     "add-stream": "^1.0.0",
@@ -14,18 +18,14 @@
     "del": "^2.0.1",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
-    "gulp-changed": "^1.3.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.0.0",
     "gulp-minify-html": "^1.0.4",
-    "gulp-newer": "^0.5.1",
     "gulp-ng-annotate": "^1.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
-    "gulp-webserver": "^0.9.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "gulp-webserver": "^0.9.1"
   },
   "dependencies": {
     "angular": "^1.4.5"
