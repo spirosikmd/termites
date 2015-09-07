@@ -11,6 +11,7 @@ var gutil = require('gulp-util');
 var sass = require('gulp-ruby-sass');
 var prefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
+var scsslint = require('gulp-scss-lint');
 var addStream = require('add-stream');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -36,16 +37,21 @@ function templates () {
     .pipe(angularTemplateCache());
 }
 
-gulp.task('lint', function () {
+gulp.task('eslint', function () {
   return gulp.src(paths.scripts)
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError());
 });
 
+gulp.task('scsslint', function () {
+  gulp.src(paths.styles)
+    .pipe(scsslint());
+});
+
 // Browserify, minify and copy all JavaScript
 // with sourcemaps all the way down
-gulp.task('scripts', ['clean', 'lint'], function () {
+gulp.task('scripts', ['clean', 'eslint'], function () {
   var b = browserify({
     entries: './src/module.js',
     debug: true
@@ -64,7 +70,23 @@ gulp.task('scripts', ['clean', 'lint'], function () {
     .pipe(gulp.dest(dist));
 });
 
-gulp.task('sass', function () {
+gulp.task('scripts:production', ['eslint'], function () {
+  var b = browserify({
+    entries: './src/module.js'
+  });
+
+  return b.bundle()
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(ngAnnotate())
+    .pipe(addStream.obj(templates()))
+    .pipe(uglify())
+    .pipe(concat('ub.modules.min.js'))
+    .on('error', gutil.log)
+    .pipe(gulp.dest(dist));
+});
+
+gulp.task('sass', ['scsslint'], function () {
   return sass('src/', {sourcemap: true, style: 'compact'})
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
@@ -72,6 +94,15 @@ gulp.task('sass', function () {
       .pipe(concat('ub.modules.min.css'))
       .on('error', sass.logError)
     .pipe(sourcemaps.write())
+    .pipe(gulp.dest(dist));
+});
+
+gulp.task('sass:production', ['scsslint'], function () {
+  return sass('src/', {style: 'compact'})
+    .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
+    .pipe(minifyCSS())
+    .pipe(concat('ub.modules.min.css'))
+    .on('error', sass.logError)
     .pipe(gulp.dest(dist));
 });
 
@@ -100,5 +131,7 @@ gulp.task('serve', ['scripts', 'sass', 'watch'], function () {
       livereload: true
     }));
 });
+
+gulp.task('build', ['clean', 'karma', 'scripts:production', 'sass:production']);
 
 gulp.task('default', ['scripts', 'sass', 'karma']);
