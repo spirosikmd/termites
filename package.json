@@ -2,13 +2,13 @@
   "name": "usabilla.components",
   "version": "1.0.0",
   "description": "Usabilla component library",
-  "main": "src/module.js",
+  "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/usabilla/usabilla.components"
+    "url": "https://github.com/usabilla/usabilla.components.git"
   },
   "author": "Spyros Ioakeimidis",
   "license": "MIT",

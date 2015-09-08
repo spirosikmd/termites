@@ -1,1 +1,2 @@
-angular.module('app', ['usabilla.components']);
+var usabillaComponents = require('src/module.js');
+module.exports = usabillaComponents;
