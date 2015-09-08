@@ -64,7 +64,7 @@ gulp.task('scripts', ['clean', 'eslint'], function () {
       .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(addStream.obj(templates()))
-      .pipe(concat('ub.modules.min.js'))
+      .pipe(concat('ub.components.min.js'))
       .on('error', gutil.log)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dist));
@@ -81,7 +81,7 @@ gulp.task('scripts:production', ['eslint'], function () {
     .pipe(ngAnnotate())
     .pipe(addStream.obj(templates()))
     .pipe(uglify())
-    .pipe(concat('ub.modules.min.js'))
+    .pipe(concat('ub.components.min.js'))
     .on('error', gutil.log)
     .pipe(gulp.dest(dist));
 });
@@ -91,7 +91,7 @@ gulp.task('sass', ['scsslint'], function () {
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
       .pipe(minifyCSS())
-      .pipe(concat('ub.modules.min.css'))
+      .pipe(concat('ub.components.min.css'))
       .on('error', sass.logError)
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dist));
@@ -101,7 +101,7 @@ gulp.task('sass:production', ['scsslint'], function () {
   return sass('src/', {style: 'compact'})
     .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
     .pipe(minifyCSS())
-    .pipe(concat('ub.modules.min.css'))
+    .pipe(concat('ub.components.min.css'))
     .on('error', sass.logError)
     .pipe(gulp.dest(dist));
 });

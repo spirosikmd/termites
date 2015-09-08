@@ -1,4 +1,4 @@
-# Usabilla modules
+# Usabilla Components
 
 * sidebar navigation
 * buttons

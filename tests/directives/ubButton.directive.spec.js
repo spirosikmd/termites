@@ -6,7 +6,7 @@ describe('ubButton', function () {
 
   beforeEach(function () {
     angular.mock.module('karma.templates');
-    angular.mock.module('usabilla.modules');
+    angular.mock.module('usabilla.components');
     angular.mock.inject(function ($rootScope, $compile) {
       scope = $rootScope.$new();
       var element = angular.element('<ub-button text="click"></ub-button>');
