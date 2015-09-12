@@ -1,7 +1,7 @@
-require('../../src/module');
+require('../../../src/button/js/module');
 
 describe('ubButtonController', function () {
-  beforeEach(angular.mock.module('usabilla.components'));
+  beforeEach(angular.mock.module('ub.button'));
 
   var $controller;
 
