@@ -19,6 +19,9 @@ var del = require('del');
 var browserify = require('browserify');
 var Server = require('karma').Server;
 var es = require('event-stream');
+var argv = require('yargs').argv;
+var gif = require('gulp-if');
+var rename = require('gulp-rename');
 
 var components = [
   'button'
@@ -56,25 +59,24 @@ gulp.task('scsslint', function () {
 
 // Browserify, minify and copy all JavaScript
 // with sourcemaps all the way down
-gulp.task('scripts', ['clean', 'eslint'], function () {
+gulp.task('scripts', function () {
   var tasks = components.map(function (component) {
     var b = browserify({
-      entries: [
-        './src/' + component + '/js/module.js'
-      ],
+      entries: './src/' + component + '/js/module.js',
       debug: true
     });
 
     return b.bundle()
       .pipe(source('bundle.js'))
       .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(gif(!argv.production, sourcemaps.init({loadMaps: true})))
         .pipe(ngAnnotate())
-        .pipe(uglify())
+        .pipe(gif(argv.production, uglify()))
         .pipe(addStream.obj(templates(component)))
-        .pipe(concat('ub.' + component + '.min.js'))
+        .pipe(concat('ub.' + component + '.js'))
+        .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', gutil.log)
-      .pipe(sourcemaps.write())
+      .pipe(gif(!argv.production, sourcemaps.write()))
       .pipe(gulp.dest(dist + '/components/' + component));
   });
 
@@ -82,50 +84,16 @@ gulp.task('scripts', ['clean', 'eslint'], function () {
   return es.merge.apply(null, tasks);
 });
 
-gulp.task('scripts:production', ['eslint'], function () {
-  var tasks = components.map(function (component) {
-    var b = browserify({
-      entries: './src/' + component + '/js/module.js'
-    });
-
-    return b.bundle()
-      .pipe(source('bundle.js'))
-      .pipe(buffer())
-      .pipe(ngAnnotate())
-      .pipe(addStream.obj(templates(component)))
-      .pipe(uglify())
-      .pipe(concat('ub.' + component + '.min.js'))
-      .on('error', gutil.log)
-      .pipe(gulp.dest(dist + '/components/' + component));
-  });
-
-  // create a merged stream
-  return es.merge.apply(null, tasks);
-});
-
-gulp.task('sass', ['scsslint'], function () {
+gulp.task('sass', function () {
   var tasks = components.map(function (component) {
     return sass('src/' + component, {sourcemap: true, style: 'compact'})
-      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(gif(!argv.production, sourcemaps.init({loadMaps: true})))
         .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
-        .pipe(minifyCSS())
-        .pipe(concat('ub.' + component + '.min.css'))
+        .pipe(gif(argv.production, minifyCSS()))
+        .pipe(concat('ub.' + component + '.css'))
+        .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', sass.logError)
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest(dist + '/components/' + component));
-  });
-
-  // create a merged stream
-  return es.merge.apply(null, tasks);
-});
-
-gulp.task('sass:production', ['scsslint'], function () {
-  var tasks = components.map(function (component) {
-    return sass('src/' + component, {style: 'compact'})
-      .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
-      .pipe(minifyCSS())
-      .pipe(concat('ub.' + component + '.min.css'))
-      .on('error', sass.logError)
+      .pipe(gif(!argv.production, sourcemaps.write()))
       .pipe(gulp.dest(dist + '/components/' + component));
   });
 
@@ -135,7 +103,8 @@ gulp.task('sass:production', ['scsslint'], function () {
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-  gulp.watch([paths.scripts, paths.styles], ['scripts', 'sass']);
+  gulp.watch([paths.scripts], ['eslint', 'scripts']);
+  gulp.watch([paths.styles], ['scsslint', 'sass']);
 });
 
 gulp.task('karma', function (done) {
@@ -152,13 +121,11 @@ gulp.task('karma:watch', function (done) {
 });
 
 // Start a development server
-gulp.task('serve', ['scripts', 'sass', 'watch'], function () {
+gulp.task('serve', ['clean', 'eslint', 'scripts', 'scsslint', 'sass', 'watch'], function () {
   gulp.src('.')
     .pipe(webserver({
       livereload: true
     }));
 });
 
-gulp.task('build', ['clean', 'karma', 'scripts:production', 'sass:production']);
-
-gulp.task('default', ['scripts', 'sass', 'karma']);
+gulp.task('default', ['clean', 'eslint', 'scripts', 'scsslint', 'sass', 'karma']);
