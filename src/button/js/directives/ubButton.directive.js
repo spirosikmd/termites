@@ -6,7 +6,7 @@ function ubButton () {
     controller: 'ubButtonController',
     controllerAs: 'ubButton',
     bindToController: true,
-    templateUrl: 'ubButton.html',
+    templateUrl: 'button/templates/ubButton.html',
     replace: true,
     transclude: true,
     link: function ($scope, iElm, iAttrs) {

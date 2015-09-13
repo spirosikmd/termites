@@ -22,6 +22,7 @@ var es = require('event-stream');
 var argv = require('yargs').argv;
 var gif = require('gulp-if');
 var rename = require('gulp-rename');
+var size = require('gulp-size');
 
 var components = [
   'button'
@@ -77,6 +78,7 @@ gulp.task('scripts', function () {
         .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', gutil.log)
       .pipe(gif(!argv.production, sourcemaps.write()))
+      .pipe(size({title: component + '.js.size'}))
       .pipe(gulp.dest(dist + '/components/' + component));
   });
 
@@ -94,6 +96,7 @@ gulp.task('sass', function () {
         .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', sass.logError)
       .pipe(gif(!argv.production, sourcemaps.write()))
+      .pipe(size({title: component + '.scss.size'}))
       .pipe(gulp.dest(dist + '/components/' + component));
   });
 
