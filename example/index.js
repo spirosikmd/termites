@@ -1,1 +1,1 @@
-angular.module('app', ['ub.button']);
+angular.module('app', ['abutton']);

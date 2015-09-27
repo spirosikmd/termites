@@ -1,7 +1,7 @@
 {
   "name": "termites",
   "version": "0.1.0",
-  "description": "Component library",
+  "description": "AngularJS component library to build large scale web applications",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start",

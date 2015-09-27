@@ -1,12 +1,12 @@
 /* @ngInject */
-function ubButton () {
+function abutton () {
   return {
     scope: {},
     restrict: 'E',
-    controller: 'ubButtonController',
-    controllerAs: 'ubButton',
+    controller: 'abuttonController',
+    controllerAs: 'abutton',
     bindToController: true,
-    templateUrl: 'ubButton.html',
+    templateUrl: 'abutton.html',
     replace: true,
     transclude: true,
     link: function ($scope, iElm, iAttrs) {
@@ -15,4 +15,4 @@ function ubButton () {
   };
 }
 
-module.exports = ubButton;
+module.exports = abutton;

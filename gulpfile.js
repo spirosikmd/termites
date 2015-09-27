@@ -25,7 +25,7 @@ var rename = require('gulp-rename');
 var size = require('gulp-size');
 
 var components = [
-  'button'
+  'abutton'
 ];
 
 var paths = {
@@ -63,7 +63,7 @@ gulp.task('scsslint', function () {
 gulp.task('scripts', function () {
   var tasks = components.map(function (component) {
     var b = browserify({
-      entries: './src/' + component + '/js/module.js',
+      entries: './src/' + component + '/js/' + component + '.js',
       debug: true
     });
 
@@ -74,12 +74,12 @@ gulp.task('scripts', function () {
         .pipe(ngAnnotate())
         .pipe(gif(argv.production, uglify()))
         .pipe(addStream.obj(templates(component)))
-        .pipe(concat('ub.' + component + '.js'))
+        .pipe(concat(component + '.js'))
         .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', gutil.log)
       .pipe(gif(!argv.production, sourcemaps.write()))
       .pipe(size({title: component + '.js.size'}))
-      .pipe(gulp.dest(dist + '/components/' + component));
+      .pipe(gulp.dest(dist + '/' + component));
   });
 
   // create a merged stream
@@ -92,12 +92,12 @@ gulp.task('sass', function () {
       .pipe(gif(!argv.production, sourcemaps.init({loadMaps: true})))
         .pipe(prefix('last 1 version', '> 1%', 'ie 8', 'ie 7'))
         .pipe(gif(argv.production, minifyCSS()))
-        .pipe(concat('ub.' + component + '.css'))
+        .pipe(concat(component + '.css'))
         .pipe(gif(argv.production, rename({suffix: '.min'})))
         .on('error', sass.logError)
       .pipe(gif(!argv.production, sourcemaps.write()))
       .pipe(size({title: component + '.scss.size'}))
-      .pipe(gulp.dest(dist + '/components/' + component));
+      .pipe(gulp.dest(dist + '/' + component));
   });
 
   // create a merged stream
