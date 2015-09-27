@@ -1,7 +1,7 @@
-require('../../../src/button/js/module');
+require('../../../src/abutton/js/abutton');
 
-describe('ubButtonController', function () {
-  beforeEach(angular.mock.module('ub.button'));
+describe('abuttonController', function () {
+  beforeEach(angular.mock.module('abutton'));
 
   var $controller;
 
@@ -12,7 +12,7 @@ describe('ubButtonController', function () {
   describe('click', function () {
     it('should change text to "clicked"', function () {
       var $scope = {};
-      var controller = $controller('ubButtonController', { $scope: $scope });
+      var controller = $controller('abuttonController', { $scope: $scope });
       controller.click();
       expect($scope.text).toEqual('clicked');
     });

@@ -1,15 +1,15 @@
-require('../../../src/button/js/module');
+require('../../../src/abutton/js/abutton');
 
-describe('ubButton', function () {
+describe('abutton', function () {
   var scope;
   var isolateScope;
 
   beforeEach(function () {
     angular.mock.module('karma.templates');
-    angular.mock.module('ub.button');
+    angular.mock.module('abutton');
     angular.mock.inject(function ($rootScope, $compile) {
       scope = $rootScope.$new();
-      var element = angular.element('<ub-button text="click"></ub-button>');
+      var element = angular.element('<abutton text="click"></abutton>');
       $compile(element)(scope);
       scope.$digest();
       isolateScope = element.isolateScope();
