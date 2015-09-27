@@ -1,4 +1,3 @@
-# Usabilla Components
+# termites
 
-* sidebar navigation
-* buttons
+AngularJS component library to build large scale web applications

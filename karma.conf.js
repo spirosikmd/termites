@@ -42,7 +42,7 @@ module.exports = function (config) {
 
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'src/',
+      stripPrefix: 'src/button/templates/',
       moduleName: 'karma.templates'
     },
 

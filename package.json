@@ -1,7 +1,7 @@
 {
-  "name": "usabilla.components",
-  "version": "1.0.0",
-  "description": "Usabilla component library",
+  "name": "termites",
+  "version": "0.1.0",
+  "description": "Component library",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/usabilla/usabilla.components.git"
+    "url": "https://github.com/spirosikmd/termites.git"
   },
   "author": "Spyros Ioakeimidis",
   "license": "MIT",
