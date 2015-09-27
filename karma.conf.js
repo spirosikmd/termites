@@ -17,7 +17,7 @@ module.exports = function (config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'src/abutton/templates/**/*.html',
+      'src/*/templates/**/*.html',
       'tests/**/*.spec.js'
     ],
 
@@ -37,13 +37,19 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'tests/**/*.spec.js': ['browserify'],
-      'src/abutton/templates/**/*.html': ['ng-html2js']
+      'src/*/templates/**/*.html': ['ng-html2js']
     },
 
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'src/abutton/templates/',
-      moduleName: 'karma.templates'
+      moduleName: 'karma.templates',
+
+      cacheIdFromPath: function (filepath) {
+        // return only the template file name with the extension as is used
+        // inside the directive definition, e.g. component.html
+        var parts = filepath.split('/');
+        return parts[3];
+      }
     },
 
 
