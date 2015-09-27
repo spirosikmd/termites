@@ -2,11 +2,24 @@
 
 AngularJS base component library to build large scale web applications with component architecture in mind.
 
-The `src` folder contains an example component, in this case a simple button. The `test` folder contains tests written for this button. Feel free to create an alternative structure for your components.
+The `src` folder contains an example component, in this case a simple button. The `test` folder contains tests written for this button. To create a new component use the following structure for your JS, SCSS, HTML files and tests.
 
-The `dist` folder contains the distributable components and produces a JS and CSS file. Link these files to any project to use a component.
+```
+src
+ |- component
+       |- js
+       |- scss
+       |- templates
+tests
+ |- component
+       |- ...
+```
+
+The `dist` folder contains the distributable components and produces a JS and CSS file. Link these files to any project to use a component. Take a look at the [example](example).
 
 The only dependency is AngularJS.
+
+## Getting started
 
 Clone the repository and run `npm i`.
 
