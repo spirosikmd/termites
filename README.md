@@ -8,7 +8,7 @@ The `dist` folder contains the distributable components and produces a JS and CS
 
 The only dependency is AngularJS.
 
-Clone the repository and run `npm i`. Use
+Clone the repository and run `npm i`.
 
 - `npm run start` to build once your files for development
 - `npm run serve` to build files and watch for changes during development
