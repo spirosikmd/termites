@@ -13,6 +13,12 @@
     "type": "git",
     "url": "https://github.com/spirosikmd/termites.git"
   },
+  "keywords": [
+    "components",
+    "angular",
+    "gulp",
+    "browserify"
+  ],
   "author": "Spyros Ioakeimidis",
   "license": "MIT",
   "devDependencies": {
